@@ -154,6 +154,7 @@ class RemoteSync
     targetPath = path.join(targetPath, path.relative(@projectPath, localPath))
     diffCmd = atom.config.get('remote-sync.difftoolCommand')
     exec ?= require("child_process").exec
+   
     logger.log ""
     logger.log "========================================="
     logger.log ""
@@ -161,7 +162,11 @@ class RemoteSync
     logger.log ""
     logger.log "========================================="
     logger.log ""
-    logger.log exec "\"#{diffCmd}\" \"#{localPath}\" \"#{targetPath}\""
+    exec("\"#{diffCmd}\" \"#{localPath}\" \"#{targetPath}\"", function(error, stdout, stderr) {
+    console.log(stdout);
+    });
+    
+    #logger.log exec "\"#{diffCmd}\" \"#{localPath}\" \"#{targetPath}\""
     #exec "\"#{diffCmd}\" \"#{localPath}\" \"#{targetPath}\"", (err)->
       #return if not err
       #getLogger().error """Check [difftool Command] in your settings (remote-sync).
